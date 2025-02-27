@@ -7,16 +7,23 @@ public class CameraFollowScript : MonoBehaviour
 
     private Vector3 offset;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         //Calculates how far the camera is from the target
         offset = target.position - transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //check if player exists
+        if (target == null)
+        {
+            enabled = false;
+            return;
+        }
+
+
         Vector3 targetPosition = target.position - offset;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, transitionSpeed * Time.deltaTime);
     }
