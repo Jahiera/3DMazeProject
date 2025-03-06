@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     //xyz directions
     public Vector3 direction;
+    public Rigidbody playerRb; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,8 +23,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        playerRb.linearVelocity = direction * speed;
+
         //the dot is there to access a functionality of "transform" translate means move
-        transform.Translate(direction * Time.deltaTime * speed);
+        //.Translate(direction * Time.deltaTime * speed);
     }
 
     private void OnMove(InputValue value)
