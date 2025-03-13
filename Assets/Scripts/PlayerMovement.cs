@@ -5,10 +5,9 @@ public class PlayerMovement : MonoBehaviour
 {
     // we put information at the start
     // of a class
-    public int health = 100;
     public float speed = 4.5f;
+    public float jumpForce = 5;
     public string hero = "Redd";
-    public bool isAlive = true;
 
     //xyz directions
     public Vector3 direction;
@@ -21,12 +20,17 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        playerRb.linearVelocity = direction * speed;
+        Vector3 velocity = direction * speed;
+        velocity.y = playerRb.linearVelocity.y;
+        
+        playerRb.linearVelocity = velocity;
 
+        //Vector3 is XYZ, Vector2 is XY
         //the dot is there to access a functionality of "transform" translate means move
         //.Translate(direction * Time.deltaTime * speed);
+               
     }
 
     private void OnMove(InputValue value)
@@ -36,4 +40,11 @@ public class PlayerMovement : MonoBehaviour
         direction = new Vector3(inputValue.x, 0, inputValue.y);
 
     }
+
+    private void OnJump(InputValue value)
+    {
+        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
+        playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    }
+    
 }
